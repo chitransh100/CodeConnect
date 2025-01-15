@@ -51,7 +51,7 @@ profileRouter.patch("/profile/edit/password",userAuth,async(req,res)=>{
     const newPasswordhash=await bcrypt.hash(newPassword,saltRounds)
     user.password=newPasswordhash
     console.log(newPasswordhash)
-    user.save()
+    await user.save()
     res.send("password updated successfully")
   }catch(err){
     res.send(err.message)
