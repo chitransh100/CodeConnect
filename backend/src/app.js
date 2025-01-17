@@ -7,6 +7,7 @@ const authRouter=require("./routes/authRouter.js")
 const profileRouter=require("./routes/profileRouter.js")
 const requestRouter=require("./routes/requestRouter.js")
 const userRouter=require("./routes/userRouter.js")
+const cors=require("cors")
 
 connectDB().then(() => {
     console.log("connected to DB");
@@ -24,6 +25,10 @@ connectDB().then(() => {
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+  origin:"http://localhost:5173",
+  credentials:true
+}))
 //middleware
 
 app.use("/",authRouter);
