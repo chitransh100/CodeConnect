@@ -1,4 +1,5 @@
 const mongoose=require("mongoose");
+const mongoURL = require("../utils/Keys");
 //we can either directly connect as
 // mongoose.connect("connection url");
 //but is better to use asyn await 
@@ -12,7 +13,7 @@ const mongoose=require("mongoose");
 //     console.log(err);})
 //but its better to use ->
 const connectDB = async()=>{
-    await mongoose.connect("mongodb+srv://kumarchitransh12:kallooram%401972%40@project0.vz42l.mongodb.net/CodeConnect");
+    await mongoose.connect(mongoURL);
     //then call the function connectDB as
 }
 module.exports=connectDB;
