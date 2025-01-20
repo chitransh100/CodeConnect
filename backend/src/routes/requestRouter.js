@@ -39,7 +39,7 @@ requestRouter.post("/request/send/:status/:toUserID",userAuth,async(req,res)=>{
     }
    
 })
-
+//fetch all the user sending request to the logged in user 
 requestRouter.post("/request/review/:status/:requestID",userAuth,async(req,res)=>{
     try{
         const loggedInUser=req.user;

@@ -14,8 +14,8 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
       $or: [{ fromUserID: loggedInUser._id }, { toUserID: loggedInUser._id }],
       status,
     })
-      .populate("fromUserID", "firstName lastName")
-      .populate("toUserID", "firstName lastName");
+      .populate("fromUserID", "firstName lastName age photoURL sex skills about")
+      .populate("toUserID",   "firstName lastName age photoURL sex skills about");
     const data = acceptedConnections.map((row) => {
       if (row.fromUserID._id.toString() === loggedInUser._id.toString()) {
         return row.toUserID;
@@ -41,7 +41,7 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
     const receivedConnections = await ConnectionRequest.find({
       toUserID: loggedInUser._id,
       status,
-    }).populate("fromUserID", "firstName lastName age");
+    }).populate("fromUserID", "firstName lastName age sex skills");
     //.populate("fromUserId",["firstName","lastName"])
     if (receivedConnections.length === 0) {
       throw new Error("No received requests");
@@ -57,11 +57,11 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
 //get the feed of the user such that it does not get his own id and id to whome he has send the request of any kind
 userRouter.get("/user/feed", userAuth, async (req, res) => {
   const loggedInUser = req.user;
-  const skip=parseInt(req.params.page) || 1
-  let limit=parsrInt(req.params.limt) || 10
+  const page=parseInt(req.params.page) || 1
+  let limit=parseInt(req.params.limt) || 10
   limit=limit > 50 ? 50 : limit 
   //if the user wants to see more than 50 users then set it to 50 
-  skip=(page-1)*limit;
+  const skip=(page-1)*limit;
   //find all the users to whome the user has send or received the request
   try {
     const requestUsers = await ConnectionRequest.find({
@@ -79,7 +79,7 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
         { _id: { $nin: Array.from(hideUsersFromFeed) } },//$nin not in array 
         { _id: { $ne: loggedInUser._id } },//$ne not equals 
       ],
-    }).select("firstName lastName age").skip(skip).limit(limit);//will find the feed and will show only the selected data 
+    }).select("firstName lastName age photoURL sex skills about").skip(skip).limit(limit);//will find the feed and will show only the selected data 
     res.send(feed);
   } catch (err) {
     res.status(400).send("something went wrong");

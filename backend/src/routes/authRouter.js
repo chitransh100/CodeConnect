@@ -39,7 +39,7 @@ authRouter.post("/signup", async (req, res) => {
     // res.send(err)
     res.status(400).send(err.message);
   } //better to write this in try and catch
-});
+});//token is not generated in this Api
 
 authRouter.post("/login", async (req, res) => {
   try {

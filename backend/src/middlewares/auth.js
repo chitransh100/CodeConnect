@@ -18,18 +18,19 @@ const userAuth=async(req,res,next)=>{
           //validate my token
           const {token}=req.cookies;
           if(!token){
-            throw new Error("Unauthorised access");
+            throw new Error("token not found");
           }
           const decode=await jwt.verify(token, 'chitranshkumar');//this will give the content of the payload 
+          //this chitranshkumar is the key
           const user =await User.findById(decode._id)
           console.log(user)
           if(!user){
-            throw new Error("Unauthorised access");
+            throw new Error("no matching user");
           }
           req.user=user
           next();
         }catch(err){
-          res.send(err.message)
+          res.status(401).send(err.message)
         }
 }
 
