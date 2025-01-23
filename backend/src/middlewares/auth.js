@@ -23,7 +23,7 @@ const userAuth=async(req,res,next)=>{
           const decode=await jwt.verify(token, 'chitranshkumar');//this will give the content of the payload 
           //this chitranshkumar is the key
           const user =await User.findById(decode._id)
-          console.log(user)
+          // console.log(user)
           if(!user){
             throw new Error("no matching user");
           }

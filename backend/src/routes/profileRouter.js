@@ -22,7 +22,7 @@ profileRouter.patch("/profile/edit",userAuth,async(req,res)=>{
   try{
     const loggedInUser=req.user;
     console.log(loggedInUser)
-    const AllowedToEdit=["firstName","lastName","semester","skills","age"]
+    const AllowedToEdit=["name","sex","skills","age"]
     const isAllowedToEdit=Object.keys(req.body).every((k)=>{
       if(!AllowedToEdit.includes(k)){
         throw new Error(`can't update the ${k}`)
@@ -32,13 +32,14 @@ profileRouter.patch("/profile/edit",userAuth,async(req,res)=>{
     if(isAllowedToEdit){
       Object.keys(req.body).forEach((k)=>(loggedInUser[k]=req.body[k]))
     }
-    loggedInUser.save()
+    await loggedInUser.save()
     console.log(loggedInUser)
     res.send("user updated successfully");
   }catch(err){
     res.status(400).send(err.message);
   }
 })
+
 profileRouter.patch("/profile/edit/password",userAuth,async(req,res)=>{
   try{
     const {password,newPassword} = req.body

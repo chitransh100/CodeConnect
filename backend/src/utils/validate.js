@@ -1,8 +1,8 @@
 const validator=require("validator")
 
 const validateSignUp =(req)=>{
-    const {firstName,password,email}=req.body
-    if(firstName.length===0 || firstName.length<4){
+    const {name,password,email}=req.body
+    if(name.length===0 || name.length<4){
         throw new Error("firstName must be 4 character long")
     }
     else if (!validator.isStrongPassword(password)){

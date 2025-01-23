@@ -7,6 +7,7 @@ const {userAuth}=require("../middlewares/auth")
 requestRouter.post("/request/send/:status/:toUserID",userAuth,async(req,res)=>{
     try{
         const user=req.user;
+        console.log(user)
         const fromUserID=user._id;
         const toUserID=req.params.toUserID;
         const status=req.params.status;
@@ -39,7 +40,7 @@ requestRouter.post("/request/send/:status/:toUserID",userAuth,async(req,res)=>{
     }
    
 })
-//fetch all the user sending request to the logged in user 
+//api for accepting and rejecting the request
 requestRouter.post("/request/review/:status/:requestID",userAuth,async(req,res)=>{
     try{
         const loggedInUser=req.user;

@@ -4,12 +4,9 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt")
 
 const userSchema = new mongoose.Schema({
-  firstName: {
+  name: {
     type: String,
     required: true,
-  },
-  lastName: {
-    type: String,
   },
   password: {
     type: String,
@@ -21,7 +18,9 @@ const userSchema = new mongoose.Schema({
       }
     }
   },
-  semester: { type: Number },
+  photourl: {
+    type: String
+  },
   email: {
     type: String,
     required:true,
@@ -46,7 +45,7 @@ const userSchema = new mongoose.Schema({
   skills:{type:[String]}
 },{timestamps:true});
 
-userSchema.index({firstName:1,lastName:1})
+// userSchema.index({firstName:1,lastName:1})
 
 userSchema.methods.getjwt=async function () {
     const user=this;

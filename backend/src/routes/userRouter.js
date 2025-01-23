@@ -14,17 +14,17 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
       $or: [{ fromUserID: loggedInUser._id }, { toUserID: loggedInUser._id }],
       status,
     })
-      .populate("fromUserID", "firstName lastName age photoURL sex skills about")
-      .populate("toUserID",   "firstName lastName age photoURL sex skills about");
+      .populate("fromUserID", "name age photourl sex skills")
+      .populate("toUserID",   "name age photourl sex skills");
     const data = acceptedConnections.map((row) => {
       if (row.fromUserID._id.toString() === loggedInUser._id.toString()) {
         return row.toUserID;
       }
       return row.fromUserID;
     });
-    if (acceptedConnections.length === 0) {
-      throw new Error("No connections found");
-    }
+    // if (acceptedConnections.length === 0) {
+    //   throw new Error("No connections found");
+    // }
     res.send({ data });
   } catch (err) {
     res.status(400).json({
@@ -41,7 +41,7 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
     const receivedConnections = await ConnectionRequest.find({
       toUserID: loggedInUser._id,
       status,
-    }).populate("fromUserID", "firstName lastName age sex skills");
+    }).populate("fromUserID", "name age photourl sex skills");
     //.populate("fromUserId",["firstName","lastName"])
     if (receivedConnections.length === 0) {
       throw new Error("No received requests");
@@ -50,6 +50,7 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
   } catch (err) {
     res.status(200).json({
       message: err.message,
+      data: []
     });
   }
 });
@@ -79,7 +80,8 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
         { _id: { $nin: Array.from(hideUsersFromFeed) } },//$nin not in array 
         { _id: { $ne: loggedInUser._id } },//$ne not equals 
       ],
-    }).select("firstName lastName age photoURL sex skills about").skip(skip).limit(limit);//will find the feed and will show only the selected data 
+    }).select("name age photourl sex skills ").skip(skip).limit(limit);//will find the feed and will show only the selected data 
+    console.log(feed);
     res.send(feed);
   } catch (err) {
     res.status(400).send("something went wrong");

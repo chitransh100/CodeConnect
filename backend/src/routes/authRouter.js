@@ -12,28 +12,30 @@ authRouter.use(cookieParser());
 
 authRouter.post("/signup", async (req, res) => {
   try {
-    const { firstName, lastName, password, semester, email, sex, age, skills } =
+    const { name,age,sex,email,password,skills,photourl } =
       req.body;
     //validate the feilds
     validateSignUp(req);
     //encrypt the password
     const saltRounds = 10;
     const hashPassword = await bcrypt.hash(password, saltRounds);
+
     //store the hashpassword in the DB
     const user = new User(
       // req.body dont trust it
       {
-        firstName,
+        name,
         password: hashPassword,
         email,
-        lastName,
-        semester,
         sex,
         age,
         skills,
+        photourl
       }
     );
+    console.log("faltu")
     await user.save();
+    console.log(user)
     res.send("user added successfully");
   } catch (err) {
     // res.send(err)
