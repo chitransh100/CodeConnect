@@ -20,7 +20,7 @@ const userAuth=async(req,res,next)=>{
           if(!token){
             throw new Error("token not found");
           }
-          const decode=await jwt.verify(token, 'chitranshkumar');//this will give the content of the payload 
+          const decode=await jwt.verify(token, process.env.JWT_secret);//this will give the content of the payload 
           //this chitranshkumar is the key
           const user =await User.findById(decode._id)
           // console.log(user)
