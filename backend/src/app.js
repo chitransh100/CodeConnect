@@ -1,18 +1,25 @@
 require('dotenv').config()
 const express = require("express");
+const http=require("http")
 const app = express();
 const PORT = 7777;
 const connectDB = require("./config/database.js");
 const cookieParser = require("cookie-parser");
-const authRouter=require("./routes/authRouter.js")
-const profileRouter=require("./routes/profileRouter.js")
-const requestRouter=require("./routes/requestRouter.js")
-const userRouter=require("./routes/userRouter.js")
-const cors=require("cors")
+const authRouter=require("./routes/authRouter.js");
+const profileRouter=require("./routes/profileRouter.js");
+const requestRouter=require("./routes/requestRouter.js");
+const userRouter=require("./routes/userRouter.js");
+const cors=require("cors");
+const initializeSocket = require('./utils/socket.js');
+
+//create the app as the server 
+const server=http.createServer(app);
+//handle the server related stuffs
+initializeSocket(server);
 
 connectDB().then(() => {
     console.log("connected to DB");
-    app.listen(PORT, (error) => {
+    server.listen(PORT, (error) => {
       if (!error) {
         console.log(`Server is listening on port ${PORT}`);
       } else {

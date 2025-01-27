@@ -81,7 +81,6 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
         { _id: { $ne: loggedInUser._id } },//$ne not equals 
       ],
     }).select("name age photourl sex skills ").skip(skip).limit(limit);//will find the feed and will show only the selected data 
-    console.log(feed);
     res.send(feed);
   } catch (err) {
     res.status(400).send("something went wrong");

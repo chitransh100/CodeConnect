@@ -12,7 +12,6 @@ const mongoose=require("mongoose");
 //     console.log(err);})
 //but its better to use ->
 const connectDB = async()=>{
-    console.log(process.env.DB_Connection_string);
     await mongoose.connect(process.env.DB_Connection_string);
     //then call the function connectDB as
 }
