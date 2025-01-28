@@ -1,4 +1,5 @@
 const socket = require("socket.io");
+const Chat=require("../models/chat")
 
 const initializeSocket = (server) => {
   //handle the cors related problems a
@@ -17,8 +18,36 @@ const initializeSocket = (server) => {
       console.log(name + "is joining room ...", roomID);
       socket.join(roomID);
     });
-    socket.on("sendMessage",({ name, userID, targetUserID, input})=>{
+
+
+    socket.on("sendMessage",async({ name, userID, targetUserID, input})=>{  
+
       const roomID = [userID, targetUserID].sort().join("_");
+      //save the messages 
+      try{ 
+        
+        let chat=await Chat.findOne({participants:{$all: [targetUserID,userID]}})
+        // console.log(chat)
+        if(!chat){
+          chat=new Chat({
+            participants:[targetUserID,userID],
+            messages:[]
+          })
+        }
+        // console.log(chat)
+
+        chat.message.push({
+          senderID:userID,
+          text: input
+        })
+        // console.log(chat)
+
+        await chat.save()
+
+      }catch(err){
+        console.log(err.message)
+      }
+
       io.to(roomID).emit("messageReceive",{name,input})
     });
 

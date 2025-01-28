@@ -28,6 +28,7 @@ const userAuth=async(req,res,next)=>{
             throw new Error("no matching user");
           }
           req.user=user
+          
           next();
         }catch(err){
           res.status(401).send(err.message)

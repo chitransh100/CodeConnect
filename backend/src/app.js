@@ -11,6 +11,7 @@ const requestRouter=require("./routes/requestRouter.js");
 const userRouter=require("./routes/userRouter.js");
 const cors=require("cors");
 const initializeSocket = require('./utils/socket.js');
+const chatRouter = require('./routes/chatRouter.js');
 
 //create the app as the server 
 const server=http.createServer(app);
@@ -43,3 +44,4 @@ app.use("/",authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter)
 app.use("/",userRouter)
+app.use("/",chatRouter);
