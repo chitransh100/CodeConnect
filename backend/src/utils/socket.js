@@ -48,7 +48,7 @@ const initializeSocket = (server) => {
         console.log(err.message)
       }
 
-      io.to(roomID).emit("messageReceive",{name,input})
+      io.to(roomID).emit("messageReceive",{senderID,input})
     });
 
   });
