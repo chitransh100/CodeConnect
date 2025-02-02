@@ -1,7 +1,7 @@
 const express = require("express");
 const authRouter = express.Router();
 const bcrypt = require("bcrypt");
-const User = require("../models/User");
+const User = require("../models/user.js");
 const validator = require("validator");
 const { validateSignUp } = require("../utils/validate.js");
 const cookieParser = require("cookie-parser");

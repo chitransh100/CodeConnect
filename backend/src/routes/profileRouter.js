@@ -1,7 +1,7 @@
 const express=require("express")
 const profileRouter=express.Router();
 const {userAuth}=require("../middlewares/auth.js")
-const User=require("../models/User")
+const User=require("../models/user.js")
 const bcrypt=require("bcrypt")
 const saltRounds = 10;
 

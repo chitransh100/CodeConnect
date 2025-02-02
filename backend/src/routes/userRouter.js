@@ -2,7 +2,7 @@ const express = require("express");
 const userRouter = express.Router();
 const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest.js");
-const User = require("../models/User");
+const User = require("../models/user.js");
 //get all the accepted connection request of the logged in user
 //the user can be to user or from user
 userRouter.get("/user/connections", userAuth, async (req, res) => {
