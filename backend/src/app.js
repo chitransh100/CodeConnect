@@ -45,3 +45,7 @@ app.use("/",profileRouter);
 app.use("/",requestRouter)
 app.use("/",userRouter)
 app.use("/",chatRouter);
+
+app.get('/', (req, res) => {
+  res.send("chitransh's app");
+})
