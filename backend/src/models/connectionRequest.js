@@ -1,6 +1,5 @@
 const mongoose=require("mongoose")
-const { applyTimestamps } = require("./User")
-const User=require("./User")
+const User=require("./user.js")
 
 const connectionRequestSchema=new mongoose.Schema(
     {
