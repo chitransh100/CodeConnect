@@ -61,4 +61,4 @@ userSchema.methods.validatePassword=async function(passwordByUser){
 // module.exports = mongoose.models.User || mongoose.model("User", userSchema);
 // module.exports = User;
 
-module.exports = mongoose.models.user || mongoose.model("user", userSchema);
+module.exports = mongoose.models.User || mongoose.model("User", userSchema);
